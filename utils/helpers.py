@@ -1,6 +1,7 @@
 ## Helper functions
 import torch
 import matplotlib.pyplot as plt
+import yaml
 
 classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -96,7 +97,7 @@ def plot_misclassified(wrong_predictions, mean, std, num_img):
 
     plt.show()
     
-def load_conifg_variables(file_name):
+def load_config_variables(file_name):
     with open(file_name, 'r') as config_file:
         try:
             config = yaml.safe_load(config_file)
