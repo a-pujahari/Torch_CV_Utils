@@ -2,6 +2,7 @@
 import torch
 import matplotlib.pyplot as plt
 import yaml
+import numpy as np
 
 classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
@@ -58,7 +59,7 @@ def accuracy_per_class(classes, testloader):
         print('Accuracy of %5s : %2d %%' % (
             classes[i], 100 * class_correct[i] / class_total[i]))
         
-def wrong_predictions(model, test_loader):
+def wrong_predictions(model, test_loader, device):
     wrong_images=[]
     wrong_label=[]
     correct_label=[]
@@ -90,9 +91,9 @@ def plot_misclassified(wrong_predictions, mean, std, num_img):
         ax = fig.add_subplot(5, 5, i+1)
         fig.subplots_adjust(hspace=.5)
         ax.axis('off')
-        class_names,_ = get_classes()
+        #class_names,_ = get_classes()
 
-        ax.set_title(f'\nActual : {class_names[target.item()]}\nPredicted : {class_names[pred.item()]}',fontsize=10)  
+        ax.set_title(f'\nActual : {classes[target.item()]}\nPredicted : {classes[pred.item()]}',fontsize=10)  
         ax.imshow(img)  
 
     plt.show()
@@ -102,7 +103,7 @@ def load_config_variables(file_name):
         try:
             config = yaml.safe_load(config_file)
             print(" loading Configuration of your experiment ..")
-            globals().update(config)
+            #globals().update(config)
             return config
         except ValueError:
             print("INVALID yaml file format.. Please provide a good yaml file")
