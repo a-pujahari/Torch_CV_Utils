@@ -1,6 +1,6 @@
 import torch
 import torchvision
-from utils import data_handling, train, test, gradcam, helpers, augmentation
+from Torch_CV_Utils.utils import data_handling, train, test, gradcam, helpers, augmentation
 from models import resnet
 from torch.optim.lr_scheduler import StepLR, ExponentialLR, OneCycleLR, LambdaLR, CosineAnnealingLR, ReduceLROnPlateau
 import torch.nn.functional as F
