@@ -21,7 +21,7 @@ import torch.optim as optim
 def create_dataloaders(mean, std, cuda, augment_func = "albumentation_augmentation"):
     
     ## Define data transformations
-    train_transforms, test_transforms = eval("data_handling."+augment_func+"(mean, std)")
+    train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std)")
 
     ## Download & return transformed datasets
     trainset, testset = data_handling.return_datasets(train_transforms, test_transforms)
