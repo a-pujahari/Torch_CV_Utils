@@ -50,7 +50,7 @@ def train(model, device, train_loader, train_acc, train_loss, optimizer, schedul
 
         optimizer.step()
         if ("ReduceLROnPlateau" in str(scheduler)):
-            scheduler.step(loss.data.cpu().numpy().item())
+            pass ##scheduler.step() will be updated in the test function for this scheduler option
         elif ("None" in str(scheduler)):
             print("Skipping scheduler step")
         else:    
