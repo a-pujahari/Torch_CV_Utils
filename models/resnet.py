@@ -86,3 +86,27 @@ def ResNet34(normalization_type = "batch"):
         return ResNet(BasicBlock, [3, 4, 6, 3], "layer")
     else:
         return ResNet(BasicBlock, [3, 4, 6, 3], "batch")
+
+class TestNet(nn.Module):
+    def __init__(self):
+        super(TestNet, self).__init__()
+        
+        # CONVOLUTION BLOCK 1A
+        self.convblock1 = nn.Sequential(
+            nn.Conv2d(in_channels = 3, out_channels = 10, kernel_size = (5, 5), stride = 2, padding = 1, dilation = 1, bias = False),
+            nn.ReLU(),
+            nn.BatchNorm2d(10),
+        ) # output_size = 14
+        
+        # Global Average Pooling
+        self.gap = nn.Sequential(
+            nn.AvgPool2d(kernel_size = 14) ## Global Average Pooling
+        ) # output_size = 1
+        
+    def forward(self, y):
+
+        y = self.convblock1(y)
+        y = self.gap(y)
+
+        y = y.view(-1, 10)
+        return F.log_softmax(y, dim=-1)
