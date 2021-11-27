@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 
 
-def test(model, device, test_loader, test_acc, test_losses, criterion):
+def test(model, device, test_loader, test_acc, test_losses, scheduler, criterion):
     model.eval()
     test_loss = 0
     correct = 0
@@ -17,6 +17,9 @@ def test(model, device, test_loader, test_acc, test_losses, criterion):
 
     test_loss /= len(test_loader.dataset)
     test_losses.append(test_loss)
+    
+    if ("ReduceLROnPlateau" in str(scheduler)):
+        scheduler.step(test_loss)
 
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
