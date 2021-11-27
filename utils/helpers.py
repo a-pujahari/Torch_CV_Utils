@@ -102,8 +102,9 @@ def load_config_variables(file_name):
     with open(file_name, 'r') as config_file:
         try:
             config = yaml.safe_load(config_file)
-            print(" loading Configuration of your experiment ..")
+            print(" Loading config ..")
             #globals().update(config)
+            print(" Config succesfully loaded ")
             return config
         except ValueError:
             print("Invalid yaml file")
