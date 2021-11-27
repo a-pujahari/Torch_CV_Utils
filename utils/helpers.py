@@ -106,6 +106,6 @@ def load_config_variables(file_name):
             #globals().update(config)
             return config
         except ValueError:
-            print("INVALID yaml file format.. Please provide a good yaml file")
+            print("Invalid yaml file")
             exit(-1)
 
