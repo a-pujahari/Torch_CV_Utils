@@ -5,7 +5,7 @@ sch_reduceLR_mode : "min"
 sch_reduceLR_factor : 0.1
 sch_reduceLR_patience : 10
 sch_reduceLR_threshold : 0.0001
-sch_reduceLR_threshold_mode : "rel"
+sch_reduceLR_threshold_mode : "abs"
 sch_reduceLR_min_lr : 0
 sch_reduceLR_cooldown : 0
 sch_reduceLR_eps : 0.00000001
