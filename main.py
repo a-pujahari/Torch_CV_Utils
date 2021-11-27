@@ -1,27 +1,17 @@
 import torch
 import torchvision
-from Torch_CV_Utils.utils import data_handling, train, test, gradcam, helpers, augmentation
-from Torch_CV_Utils.models import resnet
+from utils import data_handling, train, test, gradcam, helpers, augmentation
+from models import resnet
 from torch.optim.lr_scheduler import StepLR, ExponentialLR, OneCycleLR, LambdaLR, CosineAnnealingLR, ReduceLROnPlateau
 import torch.nn.functional as F
 import torch.optim as optim
+import torch.nn as nn
 
-# standard_lr = 0.01
-# momentum_val = 0.9
-# L2_penalty = 1e-5
-# sch_reduceLR_mode = "min"
-# sch_reduceLR_factor = 0.1
-# sch_reduceLR_patience = 10
-# sch_reduceLR_threshold = 0.0001
-# sch_reduceLR_threshold_mode = "rel"
-# sch_reduceLR_cooldown = 0
-# sch_reduceLR_min_lr = 0
-# sch_reduceLR_eps = 1e-08
 
-def create_dataloaders(mean, std, cuda, augment_func = "albumentation_augmentation"):
+def create_dataloaders(mean, std, cuda, config, augment_func = "albumentation_augmentation"):
     
     ## Define data transformations
-    train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std)")
+    train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std, config)")
 
     ## Download & return transformed datasets
     trainset, testset = data_handling.return_datasets(train_transforms, test_transforms)
@@ -32,19 +22,19 @@ def create_dataloaders(mean, std, cuda, augment_func = "albumentation_augmentati
     return trainloader, testloader
 
 
-def trigger_training(model, device, trainloader, testloader, optimizer_name = "Adam", scheduler_name = "OneCycle", criterion_name = "CrossEntropyLoss", lambda_l1 = 0, epochs = 100):
+def trigger_training(model, device, trainloader, testloader, config, optimizer_name = "Adam", scheduler_name = "OneCycle", criterion_name = "CrossEntropyLoss", lambda_l1 = 0, epochs = 100):
     
     train_acc, train_losses, test_acc, test_losses, lrs = [], [], [], [], []
     
     if (optimizer_name == "Adam"):
-        optimizer = optim.Adam(model.parameters(), lr = standard_lr, weight_decay = L2_penalty)
+        optimizer = optim.Adam(model.parameters(), lr = config['standard_lr'], weight_decay = config['L2_penalty'])
     else:
-        optimizer = optim.SGD(model.parameters(), lr = standard_lr, momentum = momentum_val)
+        optimizer = optim.SGD(model.parameters(), lr = config['standard_lr'], momentum = config['momentum_val'])
         
     if (scheduler_name == "OneCycle"):
-        scheduler = OneCycleLR(optimizer, max_lr = standard_lr, epochs = epochs, steps_per_epoch = len(trainloader))
+        scheduler = OneCycleLR(optimizer, max_lr = config['standard_lr'], epochs = epochs, steps_per_epoch = len(trainloader))
     elif (scheduler_name == "ReduceLROnPlateau"):
-        scheduler = ReduceLROnPlateau(optimizer, mode = sch_reduceLR_mode, factor = sch_reduceLR_factor, patience = sch_reduceLR_patience, threshold = sch_reduceLR_threshold, threshold_mode = sch_reduceLR_threshold_mode, cooldown = sch_reduceLR_cooldown, min_lr = sch_reduceLR_min_lr, eps = sch_reduceLR_eps, verbose = False)
+        scheduler = ReduceLROnPlateau(optimizer, mode = config['sch_reduceLR_mode'], factor = config['sch_reduceLR_factor'], patience = config['sch_reduceLR_patience'], threshold = config['sch_reduceLR_threshold'], threshold_mode = config['sch_reduceLR_threshold_mode'], cooldown = config['sch_reduceLR_cooldown'], min_lr = config['sch_reduceLR_min_lr'], eps = config['sch_reduceLR_eps'], verbose = False)
     elif (scheduler_name == "None"):
         scheduler = "None"
         
