@@ -46,7 +46,7 @@ def trigger_training(model, device, trainloader, testloader, config, optimizer_n
     for epoch in range(epochs):
         print("EPOCH:", epoch + 1)
         train.train(model, device, trainloader, train_acc, train_losses, optimizer, scheduler, criterion, lrs, lambda_l1)
-        test.test(model, device, testloader, test_acc, test_losses, criterion)
+        test.test(model, device, testloader, test_acc, test_losses, scheduler, criterion)
     
     
     return train_acc, train_losses, test_acc, test_losses, lrs
