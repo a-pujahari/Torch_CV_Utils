@@ -58,4 +58,12 @@ def lr_range_test(model, train_loader, test_loader, device, criterion, start_lr 
 
     return test_losses, lrs
 
+
+def plot_lrs(lrs, test_losses):
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
+    ax1.plot(lrs)
+    ax1.set_title("Learning Rate")
+    ax2.plot(lrs, test_losses)
+    ax2.set_xscale('log')
+    ax2.set_title("Learning rate vs Loss")
     
