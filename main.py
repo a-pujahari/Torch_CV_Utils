@@ -32,7 +32,7 @@ def trigger_training(model, device, trainloader, testloader, config, optimizer_n
         optimizer = optim.SGD(model.parameters(), lr = config['standard_lr'], momentum = config['momentum_val'])
         
     if (scheduler_name == "OneCycle"):
-        scheduler = OneCycleLR(optimizer, max_lr = config['standard_lr'], epochs = epochs, steps_per_epoch = len(trainloader))
+        scheduler = OneCycleLR(optimizer, max_lr = config['standard_lr'], epochs = epochs, steps_per_epoch = len(trainloader), pct_start = config['oneCycle_pct_start'])
     elif (scheduler_name == "ReduceLROnPlateau"):
         scheduler = ReduceLROnPlateau(optimizer, mode = config['sch_reduceLR_mode'], factor = config['sch_reduceLR_factor'], patience = config['sch_reduceLR_patience'], threshold = config['sch_reduceLR_threshold'], threshold_mode = config['sch_reduceLR_threshold_mode'], cooldown = config['sch_reduceLR_cooldown'], min_lr = config['sch_reduceLR_min_lr'], eps = config['sch_reduceLR_eps'], verbose = False)
     elif (scheduler_name == "None"):
