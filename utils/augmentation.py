@@ -44,7 +44,7 @@ def albumentation_augmentation_S9(mean, std, config):
     train_transforms = A.Compose([A.PadIfNeeded(min_height = config['padHeightWidth'], min_width = config['padHeightWidth'], always_apply = True),
                                 A.RandomCrop(width = config['randomCropSize'], height = config['randomCropSize'], p = config['randomCropProb']),
                                 A.HorizontalFlip(p = config['horizontalFlipProb']),
-                                 A.CoarseDropout(max_holes = config['maxHoles'], min_holes = config['minHoles'], max_height = config['maxHeight'],
+                                A.CoarseDropout(max_holes = config['maxHoles'], min_holes = config['minHoles'], max_height = config['maxHeight'],
                                                 max_width = config['maxWidth'], p = config['coarseDropoutProb'], 
                                                 fill_value = tuple([x * 255.0 for x in mean]),
                                                 min_height = config['minHeight'], min_width = config['minWidth']),
