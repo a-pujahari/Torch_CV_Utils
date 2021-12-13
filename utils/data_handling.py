@@ -2,6 +2,7 @@ from torchvision import datasets, transforms
 import torchvision
 import torch
 import numpy as np
+import os
 
 
 cifar10_classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')
