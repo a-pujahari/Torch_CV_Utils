@@ -61,11 +61,22 @@ def prep_tinyimagenet(valid_dir):
     
     return val_img_dir
 
+def create_tinyimagenet_datasets(train_dir, val_img_dir, mean, std, config, augment_func):
+    
+    ## Define data transformations
+    train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std, config)")
+
+    trainset = datasets.ImageFolder(train_dir, transform = train_transforms)
+    testset = datasets.ImageFolder(val_img_dir, transform = test_transforms)
+
+    return trainset, testset
+
 # functions to show an image
 def imshow(img):
     img = img / 2 + 0.5     # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    
     
     
 ## Function to show sample data
