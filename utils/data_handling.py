@@ -52,11 +52,11 @@ def prep_tinyimagenet(valid_dir):
     fp.close()
 
     for img, folder in val_img_dict.items():
-    newpath = (os.path.join(val_img_dir, folder))
-    if not os.path.exists(newpath):
-        os.makedirs(newpath)
-    if os.path.exists(os.path.join(val_img_dir, img)):
-        os.rename(os.path.join(val_img_dir, img), os.path.join(newpath, img))
+        newpath = (os.path.join(val_img_dir, folder))
+        if not os.path.exists(newpath):
+            os.makedirs(newpath)
+        if os.path.exists(os.path.join(val_img_dir, img)):
+            os.rename(os.path.join(val_img_dir, img), os.path.join(newpath, img))
     
     return val_img_dir
 
