@@ -8,13 +8,13 @@ import torch.optim as optim
 import torch.nn as nn
 
 
-def create_dataloaders(mean, std, cuda, config, dataset = "CIFAR10", augment_func = "albumentation_augmentation", gpu_batch_size = 128, cpu_batch_size = 64):
+def create_dataloaders(mean, std, cuda, config, augment_func = "albumentation_augmentation", gpu_batch_size = 128, cpu_batch_size = 64):
     
     ## Define data transformations
     train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std, config)")
 
     ## Download & return transformed datasets
-    trainset, testset = data_handling.return_datasets(train_transforms, test_transforms, dataset)
+    trainset, testset = data_handling.return_datasets(train_transforms, test_transforms)
 
     ## Define data loaders
     trainloader, testloader = data_handling.return_dataloaders(trainset, testset, cuda, gpu_batch_size, cpu_batch_size)
