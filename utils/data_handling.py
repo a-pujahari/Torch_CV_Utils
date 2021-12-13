@@ -7,20 +7,29 @@ import numpy as np
 cifar10_classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 ## Calculate Dataset Statistics
-def return_dataset_statistics():
+def return_dataset_statistics(dataset = "CIFAR10"):
     
     train_transform = transforms.Compose([transforms.ToTensor()])
-    train_set = datasets.CIFAR10(root='./data', train = True, download = True, transform = train_transform)
+    if (dataset == "TinyImageNet"):
+        train_set = datasets.TinyImageNet(root='./data', train = True, download = True, transform = train_transform)
+    else:
+        train_set = datasets.CIFAR10(root='./data', train = True, download = True, transform = train_transform)
+        
+    
     mean = train_set.data.mean(axis=(0,1,2))/255
     std = train_set.data.std(axis=(0,1,2))/255
 
     return mean, std
 
 
-def return_datasets(train_transforms, test_transforms):
+def return_datasets(train_transforms, test_transforms, dataset = "CIFAR10"):
     
-    trainset = datasets.CIFAR10(root='./data', train=True, download=True, transform = train_transforms)
-    testset = datasets.CIFAR10(root='./data', train=False, download=True, transform = test_transforms)
+    if (dataset == "TinyImageNet"):
+        trainset = datasets.TinyImageNet(root='./data', train=True, download=True, transform = train_transforms)
+        testset = datasets.TinyImageNet(root='./data', train=False, download=True, transform = test_transforms)
+    else:
+        trainset = datasets.CIFAR10(root='./data', train=True, download=True, transform = train_transforms)
+        testset = datasets.CIFAR10(root='./data', train=False, download=True, transform = test_transforms)
     
     return trainset, testset
 
