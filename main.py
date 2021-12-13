@@ -21,16 +21,6 @@ def create_dataloaders(mean, std, cuda, config, augment_func = "albumentation_au
     
     return trainloader, testloader
 
-def create_tinyimagenet_datasets(train_dir, val_img_dir, mean, std, config, augment_func):
-    
-    ## Define data transformations
-    train_transforms, test_transforms = eval("augmentation."+augment_func+"(mean, std, config)")
-
-    trainset = datasets.ImageFolder(train_dir, transform = train_transforms)
-    testset = datasets.ImageFolder(val_img_dir, transform = test_transforms)
-
-    return trainset, testset
-
 
 def trigger_training(model, device, trainloader, testloader, config, optimizer_name = "Adam", scheduler_name = "OneCycle", criterion_name = "CrossEntropyLoss", lambda_l1 = 0, epochs = 100):
     
