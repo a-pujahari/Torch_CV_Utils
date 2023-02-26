@@ -73,3 +73,17 @@ def albumentation_augmentation_S10(mean, std, config):
                                 ToTensorV2()])
     
     return lambda img:train_transforms(image=np.array(img))["image"],lambda img:test_transforms(image=np.array(img))["image"]
+
+
+## Train and Teset Phase transformations - EVA8 - Assignment 9
+def albumentation_augmentation_EVA8_S9(mean, std, config):
+    
+    train_transforms = A.Compose([
+                                A.Normalize(mean = mean, std = std, always_apply = True),
+                                ToTensorV2()
+                              ])
+
+    test_transforms = A.Compose([A.Normalize(mean = mean, std = std, always_apply = True),
+                                ToTensorV2()])
+    
+    return lambda img:train_transforms(image=np.array(img))["image"],lambda img:test_transforms(image=np.array(img))["image"]
