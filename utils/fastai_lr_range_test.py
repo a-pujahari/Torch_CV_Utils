@@ -2,7 +2,7 @@ from ignite.engine import create_supervised_trainer, create_supervised_evaluator
 from ignite.metrics import Loss, Accuracy
 from ignite.contrib.handlers import FastaiLRFinder, ProgressBar
 
-def range_test(model, optimizer, criterion, device, trainloader, testloader, start_lr = 1e-4, end_lr = 10, max_epochs = 10):
+def range_test(model, optimizer, criterion, device, trainloader, testloader, start_lr = 1e-4, end_lr = 10.0, max_epochs = 10):
     trainer = create_supervised_trainer(model, optimizer, criterion, device=device)
     ProgressBar(persist=True).attach(trainer, output_transform=lambda x: {"batch loss": x})
 
