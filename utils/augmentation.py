@@ -76,7 +76,7 @@ def albumentation_augmentation_S10(mean, std, config):
 
 
 ## Train and Teset Phase transformations - EVA8 - Assignment 9
-def albumentation_augmentation_EVA8_S9(mean, std, config):
+def plain_loader(mean, std, config):
     
     train_transforms = A.Compose([
                                 A.Normalize(mean = mean, std = std, always_apply = True),
